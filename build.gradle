@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+	id 'org.springframework.boot' version '2.6.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group = 'com.nathan'
+version = '0.0.1.0'
+description = 'jjwt'
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+dependencies {
+	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+
+    implementation 'org.springframework.boot:spring-boot-devtools:2.6.6'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.6.6'
+    implementation 'org.springframework.boot:spring-boot-starter-security:2.6.6'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.6'
+	implementation 'io.jsonwebtoken:jjwt:0.7.0'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5',
+    // Uncomment the next line if you want to use RSASSA-PSS (PS256, PS384, PS512) algorithms:
+    //'org.bouncycastle:bcprov-jdk15on:1.70',
+    'io.jsonwebtoken:jjwt-jackson:0.11.5' // or 'io.jsonwebtoken:jjwt-gson:0.11.5' for gson
+	testImplementation group: 'junit', name: 'junit', version: '4.13'
+	testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.6.6'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Werror']
+}
+
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
